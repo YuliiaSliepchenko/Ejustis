@@ -1,0 +1,167 @@
+{
+  "allowed_domains": [
+    "zakon.rada.gov.ua",
+    "kmu.gov.ua",
+    "ombudsman.gov.ua",
+    "un.org",
+    "digitallibrary.un.org",
+    "ohchr.org",
+    "coe.int",
+    "echr.coe.int",
+    "eur-lex.europa.eu",
+    "icrc.org"
+  ],
+  "sources": [
+    {
+      "id": "ua_constitution",
+      "title": "Конституція України",
+      "type": "Конституція",
+      "country": "UA",
+      "url": "https://zakon.rada.gov.ua/laws/show/254%D0%BA/96-%D0%B2%D1%80",
+      "domain": "zakon.rada.gov.ua",
+      "date_adopted": "1996-06-28",
+      "status": "чинний",
+      "language": "uk",
+      "rights": ["право на свободу", "право на справедливий суд", "право на приватність", "право на захист", "право на освіту", "право на охорону здоров'я"],
+      "articles": ["Стаття 3", "Стаття 21", "Стаття 22", "Стаття 27", "Стаття 28", "Стаття 29", "Стаття 32", "Стаття 55", "Стаття 56", "Стаття 59", "Стаття 62", "Стаття 63"]
+    },
+    {
+      "id": "ua_kpk",
+      "title": "Кримінальний процесуальний кодекс України",
+      "type": "Закон",
+      "country": "UA",
+      "url": "https://zakon.rada.gov.ua/laws/show/4651-17",
+      "domain": "zakon.rada.gov.ua",
+      "date_adopted": "2012-04-13",
+      "status": "чинний",
+      "language": "uk",
+      "rights": ["право на захисника", "право на мовчання", "право на затримання", "право на повідомлення"],
+      "articles": ["Стаття 42", "Стаття 208", "Стаття 212", "Стаття 213", "Стаття 215"]
+    },
+    {
+      "id": "echr_convention",
+      "title": "Європейська конвенція з прав людини",
+      "type": "Міжнародний договір",
+      "country": "UA",
+      "ratified_by_ukraine": true,
+      "ratification_date": "1997-09-11",
+      "url": "https://echr.coe.int/documents/d/echr/convention_ukr",
+      "domain": "echr.coe.int",
+      "date_adopted": "1950-11-04",
+      "status": "чинний",
+      "language": "uk",
+      "rights": ["право на свободу", "право на справедливий суд", "право на приватність", "свобода вираження", "право на освіту"],
+      "articles": ["Стаття 2", "Стаття 3", "Стаття 5", "Стаття 6", "Стаття 8", "Стаття 10", "Стаття 14"]
+    },
+    {
+      "id": "iccpr",
+      "title": "Міжнародний пакт про громадянські і політичні права",
+      "type": "Міжнародний договір",
+      "country": "UA",
+      "ratified_by_ukraine": true,
+      "ratification_date": "1973-11-12",
+      "url": "https://www.ohchr.org/en/instruments-mechanisms/instruments/international-covenant-civil-and-political-rights",
+      "domain": "ohchr.org",
+      "date_adopted": "1966-12-16",
+      "status": "чинний",
+      "language": "uk",
+      "rights": ["право на свободу", "право на справедливий суд", "право на приватність", "право на мирні зібрання"],
+      "articles": ["Стаття 6", "Стаття 7", "Стаття 9", "Стаття 14", "Стаття 17", "Стаття 19", "Стаття 21"]
+    },
+    {
+      "id": "icrc_gc3",
+      "title": "Женевська конвенція III — поводження з військовополоненими",
+      "type": "Гуманітарно-правовий документ",
+      "country": "UA",
+      "ratified_by_ukraine": true,
+      "url": "https://www.icrc.org/en/document/geneva-convention-relative-treatment-prisoners-war",
+      "domain": "icrc.org",
+      "date_adopted": "1949-08-12",
+      "status": "чинний",
+      "language": "uk",
+      "rights": ["права полонених", "міжнародне гуманітарне право"],
+      "articles": ["Стаття 4", "Стаття 13", "Стаття 17", "Стаття 78"]
+    },
+    {
+      "id": "un_udhr",
+      "title": "Загальна декларація прав людини",
+      "type": "Резолюція ООН",
+      "country": "UNIVERSAL",
+      "url": "https://www.un.org/en/about-us/universal-declaration-of-human-rights",
+      "domain": "un.org",
+      "date_adopted": "1948-12-10",
+      "status": "чинний",
+      "language": "uk",
+      "rights": ["всі права людини"],
+      "articles": ["Стаття 1", "Стаття 3", "Стаття 5", "Стаття 7", "Стаття 9", "Стаття 10", "Стаття 11", "Стаття 12", "Стаття 18", "Стаття 19", "Стаття 20"]
+    },
+    {
+      "id": "ua_law_appeal",
+      "title": "Закон України «Про звернення громадян»",
+      "type": "Закон",
+      "country": "UA",
+      "url": "https://zakon.rada.gov.ua/laws/show/393/96-%D0%B2%D1%80",
+      "domain": "zakon.rada.gov.ua",
+      "date_adopted": "1996-10-02",
+      "status": "чинний",
+      "language": "uk",
+      "rights": ["право на звернення", "право на скаргу"],
+      "articles": ["Стаття 1", "Стаття 5", "Стаття 8", "Стаття 17"]
+    },
+    {
+      "id": "ua_ombudsman",
+      "title": "Закон України «Про Уповноваженого Верховної Ради України з прав людини»",
+      "type": "Закон",
+      "country": "UA",
+      "url": "https://zakon.rada.gov.ua/laws/show/776/97-%D0%B2%D1%80",
+      "domain": "zakon.rada.gov.ua",
+      "date_adopted": "1997-12-23",
+      "status": "чинний",
+      "language": "uk",
+      "rights": ["право на скаргу", "право на захист"],
+      "articles": ["Стаття 13", "Стаття 14", "Стаття 15"]
+    }
+  ],
+  "topics": {
+    "затримання": ["ua_constitution", "ua_kpk", "echr_convention", "iccpr"],
+    "арешт": ["ua_constitution", "ua_kpk", "echr_convention", "iccpr"],
+    "свобода": ["ua_constitution", "echr_convention", "iccpr", "un_udhr"],
+    "справедливий суд": ["echr_convention", "iccpr", "ua_constitution"],
+    "катування": ["echr_convention", "iccpr", "un_udhr", "icrc_gc3"],
+    "приватність": ["echr_convention", "iccpr", "ua_constitution"],
+    "дискримінація": ["echr_convention", "iccpr", "un_udhr", "ua_constitution"],
+    "свобода слова": ["echr_convention", "iccpr", "un_udhr", "ua_constitution"],
+    "зібрання": ["echr_convention", "iccpr", "ua_constitution"],
+    "полон": ["icrc_gc3"],
+    "окупація": ["icrc_gc3"],
+    "збройний конфлікт": ["icrc_gc3"],
+    "скарга": ["ua_law_appeal", "ua_ombudsman", "echr_convention"],
+    "омбудсман": ["ua_ombudsman"],
+    "звернення": ["ua_law_appeal"]
+  },
+  "contacts": {
+    "UA": [
+      {
+        "name": "Уповноважений Верховної Ради з прав людини",
+        "url": "https://ombudsman.gov.ua",
+        "phone": "0800501720",
+        "description": "Безкоштовна гаряча лінія омбудсмана"
+      },
+      {
+        "name": "Офіційний вебпортал Верховної Ради України",
+        "url": "https://zakon.rada.gov.ua",
+        "description": "Законодавство України"
+      },
+      {
+        "name": "Кабінет Міністрів України",
+        "url": "https://www.kmu.gov.ua/",
+        "description": "Виконавча влада"
+      },
+      {
+        "name": "Європейський суд з прав людини",
+        "url": "https://echr.coe.int",
+        "description": "Подача заяви до ЄСПЛ (після вичерпання національних засобів)"
+      }
+    ]
+  }
+}
