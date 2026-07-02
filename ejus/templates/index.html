@@ -53,10 +53,25 @@
           <option value="OTHER">🌍 Інша країна</option>
         </select>
       </div>
+      <div class="form-row form-row-split">
+        <label class="field-label" for="languageSelect">Мова відповіді</label>
+        <select class="country-select" id="languageSelect">
+          <option value="uk">Українська</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <div class="assistant-intro">
+        <p>
+          Як ШІ-асистент з первинної юридичної допомоги, я можу зробити первинний правовий аналіз ситуації,
+          визначити перелік прав, які може мати особа, знайти у юридичних документах світу та обраної країни
+          відповідні норми, а також запропонувати комплекс заходів, які можна вжити для вирішення ситуації.
+        </p>
+        <strong>Для початку, опишіть ситуацію.</strong>
+      </div>
       <textarea
         id="questionInput"
         class="question-input"
-        placeholder="Опишіть вашу ситуацію або запитайте про права людини...&#10;&#10;Наприклад: «Мене незаконно затримали. Що робити?»"
+        placeholder="Наприклад: «Мене незаконно затримали. Що робити?»"
         rows="4"
         maxlength="2000"
       ></textarea>
@@ -125,9 +140,9 @@
 <!-- Sources Section -->
 <section class="sources-section" id="sources">
   <div class="section-inner">
-    <h2 class="section-title">Офіційні джерела</h2>
-    <p class="section-sub">eJustice використовує виключно верифіковані офіційні джерела права</p>
-    <div class="sources-grid" id="sourcesGrid">
+    <h2 class="section-title">Джерела, які використовуються</h2>
+    <p class="section-sub">Повний список офіційних правових джерел, які eJustice може враховувати під час первинного аналізу ситуації.</p>
+    <div class="sources-list" id="sourcesGrid">
       <!-- filled by JS -->
     </div>
   </div>

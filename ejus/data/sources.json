@@ -9,7 +9,8 @@
     "coe.int",
     "echr.coe.int",
     "eur-lex.europa.eu",
-    "icrc.org"
+    "icrc.org",
+    "ihl-databases.icrc.org"
   ],
   "sources": [
     {
@@ -83,6 +84,45 @@
       "articles": ["Стаття 4", "Стаття 13", "Стаття 17", "Стаття 78"]
     },
     {
+      "id": "ua_occupied_territories_law",
+      "title": "Закон України «Про забезпечення прав і свобод громадян та правовий режим на тимчасово окупованій території України»",
+      "type": "Закон",
+      "country": "UA",
+      "url": "https://zakon.rada.gov.ua/laws/show/1207-18",
+      "domain": "zakon.rada.gov.ua",
+      "date_adopted": "2014-04-15",
+      "status": "чинний",
+      "language": "uk",
+      "rights": ["правовий режим тимчасово окупованої території", "захист прав на тимчасово окупованій території", "незаконність окупаційних органів"],
+      "articles": ["Стаття 1", "Стаття 3", "Стаття 4", "Стаття 5", "Стаття 9", "Стаття 17", "Стаття 18", "Стаття 19"]
+    },
+    {
+      "id": "gciv_occupation",
+      "title": "Женевська конвенція IV про захист цивільного населення під час війни",
+      "type": "Міжнародний договір",
+      "country": "UNIVERSAL",
+      "url": "https://ihl-databases.icrc.org/en/ihl-treaties/gciv-1949",
+      "domain": "ihl-databases.icrc.org",
+      "date_adopted": "1949-08-12",
+      "status": "чинний",
+      "language": "en",
+      "rights": ["захист цивільних осіб", "правила окупації", "обов'язки окупаційної влади", "захист дітей", "заборона примусу"],
+      "articles": ["Стаття 27", "Стаття 47", "Стаття 49", "Стаття 50", "Стаття 51", "Стаття 64", "Стаття 78"]
+    },
+    {
+      "id": "hague_regulations_1907",
+      "title": "Гаазькі правила 1907 року щодо законів і звичаїв війни на суходолі",
+      "type": "Міжнародний договір",
+      "country": "UNIVERSAL",
+      "url": "https://ihl-databases.icrc.org/en/ihl-treaties/hague-conv-iv-1907/regulations-art-43",
+      "domain": "ihl-databases.icrc.org",
+      "date_adopted": "1907-10-18",
+      "status": "чинний",
+      "language": "en",
+      "rights": ["правила окупації", "обов'язок забезпечувати порядок і безпеку", "чинність місцевих законів під час окупації"],
+      "articles": ["Стаття 42", "Стаття 43", "Стаття 46"]
+    },
+    {
       "id": "un_udhr",
       "title": "Загальна декларація прав людини",
       "type": "Резолюція ООН",
@@ -109,6 +149,21 @@
       "articles": ["Стаття 1", "Стаття 5", "Стаття 8", "Стаття 17"]
     },
     {
+      "id": "un_crc",
+      "title": "Конвенція ООН про права дитини",
+      "type": "Міжнародний договір",
+      "country": "UNIVERSAL",
+      "ratified_by_ukraine": true,
+      "ratification_date": "1991-02-27",
+      "url": "https://www.ohchr.org/en/instruments-mechanisms/instruments/convention-rights-child",
+      "domain": "ohchr.org",
+      "date_adopted": "1989-11-20",
+      "status": "чинний",
+      "language": "uk",
+      "rights": ["права дитини", "найкращі інтереси дитини", "право дитини бути вислуханою", "право на освіту", "право на захист від насильства", "право на сімейне життя"],
+      "articles": ["Стаття 2", "Стаття 3", "Стаття 6", "Стаття 9", "Стаття 12", "Стаття 19", "Стаття 28", "Стаття 29"]
+    },
+    {
       "id": "ua_ombudsman",
       "title": "Закон України «Про Уповноваженого Верховної Ради України з прав людини»",
       "type": "Закон",
@@ -133,11 +188,22 @@
     "свобода слова": ["echr_convention", "iccpr", "un_udhr", "ua_constitution"],
     "зібрання": ["echr_convention", "iccpr", "ua_constitution"],
     "полон": ["icrc_gc3"],
-    "окупація": ["icrc_gc3"],
+    "окупація": ["ua_occupied_territories_law", "gciv_occupation", "hague_regulations_1907", "icrc_gc3"],
+    "окупована територія": ["ua_occupied_territories_law", "gciv_occupation", "hague_regulations_1907"],
+    "окупованій території": ["ua_occupied_territories_law", "gciv_occupation", "hague_regulations_1907"],
+    "тимчасово окупована": ["ua_occupied_territories_law", "gciv_occupation", "hague_regulations_1907"],
+    "тимчасово окупованій": ["ua_occupied_territories_law", "gciv_occupation", "hague_regulations_1907"],
+    "тот": ["ua_occupied_territories_law", "gciv_occupation", "hague_regulations_1907"],
     "збройний конфлікт": ["icrc_gc3"],
     "скарга": ["ua_law_appeal", "ua_ombudsman", "echr_convention"],
     "омбудсман": ["ua_ombudsman"],
-    "звернення": ["ua_law_appeal"]
+    "звернення": ["ua_law_appeal"],
+    "дитина": ["un_crc", "ua_constitution", "un_udhr"],
+    "дитини": ["un_crc", "ua_constitution", "un_udhr"],
+    "права дитини": ["un_crc", "ua_constitution", "un_udhr"],
+    "батьки": ["un_crc"],
+    "сім'я": ["un_crc", "echr_convention"],
+    "освіта": ["un_crc", "ua_constitution"]
   },
   "contacts": {
     "UA": [

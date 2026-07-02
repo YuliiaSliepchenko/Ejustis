@@ -30,6 +30,7 @@ questionInput.addEventListener('keydown', (e) => {
 async function submitConsult() {
   const question = questionInput.value.trim();
   const country = document.getElementById('countrySelect').value;
+  const language = document.getElementById('languageSelect')?.value || 'uk';
 
   if (!question) { showError('Будь ласка, введіть питання'); return; }
   if (question.length < 10) { showError('Питання занадто коротке'); return; }
@@ -41,9 +42,19 @@ async function submitConsult() {
     const res = await fetch('/api/consult', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question, country })
+      body: JSON.stringify({ question, country, language })
     });
-    const data = await res.json();
+    const responseText = await res.text();
+    let data;
+    try {
+      data = responseText ? JSON.parse(responseText) : {};
+    } catch (parseError) {
+      throw new Error(`Сервер повернув не JSON-відповідь (${res.status}).`);
+    }
+
+    if (!res.ok) {
+      throw new Error(data.message || `Помилка сервера: ${res.status}`);
+    }
 
     if (data.error) {
       showError(data.message);
@@ -51,7 +62,7 @@ async function submitConsult() {
       renderResult(data, question);
     }
   } catch (err) {
-    showError('Помилка з\'єднання з сервером. Перевірте підключення.');
+    showError(err.message || 'Помилка з\'єднання з сервером. Перевірте підключення.');
   } finally {
     setLoading(false);
   }
@@ -61,14 +72,16 @@ function renderResult(data, question) {
   const resultSection = document.getElementById('resultSection');
   const resultBody = document.getElementById('resultBody');
   const resultTime = document.getElementById('resultTime');
+  const sourceBadge = document.querySelector('.source-badge');
 
   resultTime.textContent = data.queried_at || '';
 
   if (!data.has_sources) {
+    setSourceBadge(sourceBadge, false);
     resultBody.innerHTML = `
       <div class="no-sources-box">
-        ⚠ Недостатньо офіційних джерел для формування відповіді.<br/>
-        ${data.short_answer || 'Рекомендуємо звернутися до юриста або перевірити інформацію в офіційному органі.'}
+        ⚠ ${data.out_of_scope ? 'Питання поза правовою темою.' : 'Недостатньо офіційних джерел для формування відповіді.'}<br/>
+        ${esc(data.short_answer || fallbackNoSourcesText(data.out_of_scope))}
       </div>
     `;
     resultSection.style.display = 'block';
@@ -77,6 +90,19 @@ function renderResult(data, question) {
   }
 
   let html = '';
+  setSourceBadge(sourceBadge, true);
+
+  if (data.violation_assessment) {
+    html += block('Оцінка наявності порушення', renderViolationAssessment(data.violation_assessment));
+  }
+
+  if (data.case_analysis) {
+    html += block('Розбір справи по суті', `<p class="result-short">${esc(data.case_analysis)}</p>`);
+  }
+
+  if (data.fact_assessment?.length) {
+    html += block('Факти, що впливають на оцінку', listItems(data.fact_assessment));
+  }
 
   // 1. Short answer
   html += block('Відповідь', `<p class="result-short">${esc(data.short_answer)}</p>`);
@@ -116,12 +142,12 @@ function renderResult(data, question) {
   }
 
   // 6. Documents
-  if (data.documents?.filter(Boolean).length) {
+  if (toList(data.documents).length) {
     html += block('Можливі документи', listItems(data.documents));
   }
 
   // 7. Deadlines
-  if (data.deadlines?.filter(Boolean).length) {
+  if (toList(data.deadlines).length) {
     html += block('Строки', listItems(data.deadlines));
   }
 
@@ -129,6 +155,17 @@ function renderResult(data, question) {
   if (data.sources_verified?.length) {
     const srcList = data.sources_verified.map(s => `<li class="result-list" style="padding:4px 0 4px 24px;position:relative;font-size:13px;color:var(--text-sec)">${esc(s)}</li>`).join('');
     html += block('Перевірені джерела', `<ul class="result-list">${srcList}</ul>`);
+  }
+
+  if (data.source_documents?.length) {
+    const docs = data.source_documents.map(s => `
+      <div class="legal-basis-item">
+        <div class="legal-basis-title">${esc(s.title)}</div>
+        <div class="legal-basis-article">${esc(s.type || '')}${s.articles?.length ? ` · ${esc(s.articles.join(', '))}` : ''}</div>
+        ${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener" class="legal-basis-link">↗ Офіційне джерело</a>` : ''}
+      </div>
+    `).join('');
+    html += block('Документи, враховані у відповіді', docs);
   }
 
   // 9. Disclaimer
@@ -141,6 +178,36 @@ function renderResult(data, question) {
   resultSection.scrollIntoView({ behavior: 'smooth' });
 }
 
+function setSourceBadge(sourceBadge, hasSources) {
+  if (!sourceBadge) return;
+  sourceBadge.innerHTML = hasSources
+    ? '<span class="source-dot"></span>Відповідь сформована на основі офіційних джерел'
+    : '<span class="source-dot"></span>Поза правовою темою: юридичні джерела не підбиралися';
+}
+
+function fallbackNoSourcesText(outOfScope) {
+  return outOfScope
+    ? 'Сформулюйте питання як правову ситуацію: яке право порушено, куди звернутися, який документ потрібен або яку скаргу подати.'
+    : 'Рекомендуємо звернутися до юриста або перевірити інформацію в офіційному органі.';
+}
+
+function renderViolationAssessment(assessment) {
+  const status = assessment.status || 'insufficient_facts';
+  const labels = {
+    likely_violation: 'Ймовірно є порушення',
+    possible_violation: 'Може бути порушення',
+    insufficient_facts: 'Недостатньо фактів для висновку',
+    likely_no_violation: 'Ознак порушення не видно'
+  };
+  return `
+    <div class="violation-assessment violation-${esc(status)}">
+      <div class="violation-status">${esc(labels[status] || labels.insufficient_facts)}</div>
+      ${assessment.summary ? `<p class="violation-summary">${esc(assessment.summary)}</p>` : ''}
+      ${assessment.reasoning ? `<p class="violation-reasoning">${esc(assessment.reasoning)}</p>` : ''}
+    </div>
+  `;
+}
+
 function block(title, content) {
   return `
     <div class="result-block">
@@ -151,11 +218,26 @@ function block(title, content) {
 }
 
 function listItems(arr) {
-  return '<ul class="result-list">' + arr.filter(Boolean).map(i => `<li>${esc(i)}</li>`).join('') + '</ul>';
+  return '<ul class="result-list">' + toList(arr).map(i => `<li>${esc(formatValue(i))}</li>`).join('') + '</ul>';
 }
 
 function stepsItems(arr) {
-  return '<ol class="result-steps">' + arr.filter(Boolean).map(i => `<li>${esc(i)}</li>`).join('') + '</ol>';
+  return '<ol class="result-steps">' + toList(arr).map(i => `<li>${esc(formatValue(i))}</li>`).join('') + '</ol>';
+}
+
+function toList(value) {
+  if (Array.isArray(value)) return value.filter(Boolean);
+  if (value === null || value === undefined || value === '') return [];
+  return [value];
+}
+
+function formatValue(value) {
+  if (typeof value === 'string') return value;
+  if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+  if (typeof value === 'object') {
+    return Object.values(value).filter(Boolean).join(' — ') || JSON.stringify(value);
+  }
+  return '';
 }
 
 function esc(str) {
@@ -218,20 +300,34 @@ function quickExit() {
 async function loadSources() {
   const country = document.getElementById('countrySelect')?.value || 'UA';
   try {
-    const res = await fetch(`/api/sources?country=${country}`);
-    const sources = await res.json();
+    const res = await fetch(`/api/sources?country=${country}&all=1`);
+    const payload = await res.json();
+    const sources = Array.isArray(payload) ? payload : payload.sources;
     const grid = document.getElementById('sourcesGrid');
     if (!grid) return;
-    grid.innerHTML = sources.map(s => `
-      <div class="source-card">
-        <div class="source-type">${esc(s.type)}</div>
-        <div class="source-name">${esc(s.title)}</div>
-        <div class="source-status">✓ ${esc(s.status)}</div>
-        <a href="${esc(s.url)}" target="_blank" rel="noopener" class="source-url">${esc(s.domain)}</a>
-        <div class="source-tags">
-          ${(s.rights || []).slice(0, 3).map(r => `<span class="source-tag">${esc(r)}</span>`).join('')}
+    grid.innerHTML = (sources || []).map((s, index) => `
+      <article class="source-row">
+        <div class="source-index">${index + 1}</div>
+        <div class="source-main">
+          <div class="source-row-head">
+            <div>
+              <div class="source-type">${esc(s.type)}</div>
+              <h3 class="source-name">${esc(s.title)}</h3>
+            </div>
+            <a href="${esc(s.url)}" target="_blank" rel="noopener" class="source-open">Відкрити</a>
+          </div>
+          <div class="source-meta">
+            <span>${esc(s.status || 'чинний')}</span>
+            <span>${esc(s.country || 'UNIVERSAL')}</span>
+            <span>${esc(s.domain || '')}</span>
+            ${s.date_adopted ? `<span>${esc(s.date_adopted)}</span>` : ''}
+          </div>
+          ${s.articles?.length ? `<div class="source-articles">${esc(s.articles.join(', '))}</div>` : ''}
+          <div class="source-tags">
+            ${(s.rights || []).map(r => `<span class="source-tag">${esc(r)}</span>`).join('')}
+          </div>
         </div>
-      </div>
+      </article>
     `).join('');
   } catch (e) {
     console.warn('Failed to load sources', e);
