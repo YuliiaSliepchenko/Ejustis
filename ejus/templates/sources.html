@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eJustice — Джерела</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+<button class="quick-exit" onclick="quickExit()" title="Швидкий вихід">✕ Вихід</button>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo logo-link" href="/">
+      <span class="logo-icon">⚖</span>
+      <div class="logo-text">
+        <span class="logo-name">eJustice</span>
+        <span class="logo-sub">Права людини • Офіційні джерела</span>
+      </div>
+    </a>
+    <nav class="nav">
+      <a href="/" class="nav-link">Консультація</a>
+      <a href="/sources" class="nav-link">Джерела</a>
+    </nav>
+  </div>
+</header>
+
+<main class="sources-page">
+  <section class="sources-page-hero">
+    <div class="section-inner">
+      <div class="hero-badge">🔒 Повний перелік офіційних джерел</div>
+      <h1 class="section-title">Джерела, які використовує eJustice</h1>
+      <p class="section-sub">
+        На головній сторінці після консультації показуються лише джерела, фактично використані у відповіді.
+        Тут зібрано повний каталог джерел, доступних додатку.
+      </p>
+    </div>
+  </section>
+
+  <section class="sources-section sources-section-page">
+    <div class="section-inner">
+      <div class="sources-list">
+        {% for source in sources %}
+          <article class="source-row">
+            <div class="source-index">{{ loop.index }}</div>
+            <div class="source-main">
+              <div class="source-row-head">
+                <div>
+                  <div class="source-type">{{ source.type }}</div>
+                  <h2 class="source-name">{{ source.title }}</h2>
+                </div>
+                <a href="{{ source.url }}" target="_blank" rel="noopener" class="source-open">Відкрити</a>
+              </div>
+              <div class="source-meta">
+                {% if source.status %}<span>{{ source.status }}</span>{% endif %}
+                {% if source.country %}<span>{{ source.country }}</span>{% endif %}
+                {% if source.domain %}<span>{{ source.domain }}</span>{% endif %}
+                {% if source.date_adopted %}<span>{{ source.date_adopted }}</span>{% endif %}
+              </div>
+              {% if source.articles %}
+                <div class="source-articles">{{ source.articles | join(', ') }}</div>
+              {% endif %}
+              {% if source.rights %}
+                <div class="source-tags">
+                  {% for right in source.rights %}
+                    <span class="source-tag">{{ right }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>© 2026 eJustice</span>
+    <span>Права людини • Офіційні джерела</span>
+    <button class="quick-exit-footer" onclick="quickExit()">Швидкий вихід ✕</button>
+  </div>
+</footer>
+
+<script>
+  function quickExit() {
+    window.location.replace('https://www.google.com');
+  }
+</script>
+</body>
+</html>

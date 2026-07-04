@@ -255,7 +255,8 @@ function renderResult(data, question, shouldScroll = true) {
 
   let html = '';
   setSourceBadge(sourceBadge, true);
-  renderRelevantSources(data.source_documents || []);
+  const usedSourceDocuments = getUsedSourceDocuments(data);
+  renderRelevantSources(usedSourceDocuments);
 
   if (data.violation_assessment) {
     html += block(t('violationAssessment'), renderViolationAssessment(data.violation_assessment));
@@ -317,13 +318,13 @@ function renderResult(data, question, shouldScroll = true) {
   }
 
   // 8. Sources verified
-  if (toList(data.sources_verified).length) {
-    const srcList = toList(data.sources_verified).map(s => `<li class="result-list" style="padding:4px 0 4px 24px;position:relative;font-size:13px;color:var(--text-sec)">${esc(formatValue(s))}</li>`).join('');
+  if (usedSourceDocuments.length) {
+    const srcList = usedSourceDocuments.map(s => `<li class="result-list" style="padding:4px 0 4px 24px;position:relative;font-size:13px;color:var(--text-sec)">${esc(s.title || formatValue(s))}</li>`).join('');
     html += block(t('verifiedSources'), `<ul class="result-list">${srcList}</ul>`);
   }
 
-  if (toList(data.source_documents).length) {
-    const docs = toList(data.source_documents).map(s => typeof s === 'object' ? `
+  if (usedSourceDocuments.length) {
+    const docs = usedSourceDocuments.map(s => typeof s === 'object' ? `
       <div class="legal-basis-item">
         <div class="legal-basis-title">${esc(s.title)}</div>
         <div class="legal-basis-article">${esc(s.type || '')}${s.articles?.length ? ` · ${esc(s.articles.join(', '))}` : ''}</div>
@@ -462,6 +463,27 @@ function showToast(msg) {
 
 function quickExit() {
   window.location.replace('https://www.google.com');
+}
+
+function getUsedSourceDocuments(data) {
+  const documents = toList(data.source_documents).filter(item => typeof item === 'object');
+  const basisItems = toList(data.legal_basis);
+  if (!documents.length || !basisItems.length) return [];
+
+  const basisText = basisItems.map(item => formatValue(item).toLowerCase()).join(' ');
+  const basisUrls = new Set(
+    basisItems
+      .filter(item => typeof item === 'object' && item.url)
+      .map(item => item.url)
+  );
+
+  return documents.filter(source => {
+    const title = String(source.title || '').toLowerCase();
+    return (
+      (source.url && basisUrls.has(source.url)) ||
+      (title && basisText.includes(title))
+    );
+  });
 }
 
 function renderRelevantSources(sources) {

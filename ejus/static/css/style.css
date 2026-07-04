@@ -79,6 +79,10 @@ body {
   align-items: center;
   gap: 12px;
 }
+.logo-link {
+  color: inherit;
+  text-decoration: none;
+}
 .logo-icon {
   font-size: 28px;
   line-height: 1;
@@ -619,6 +623,16 @@ body {
 }
 
 /* ===== SOURCES SECTION ===== */
+.sources-page {
+  min-height: calc(100vh - 64px);
+}
+.sources-page-hero {
+  padding: 56px 24px 24px;
+  background: var(--milk-bg);
+}
+.sources-section-page {
+  padding-top: 32px;
+}
 .sources-section {
   padding: 64px 24px;
   background: var(--milk-deep);

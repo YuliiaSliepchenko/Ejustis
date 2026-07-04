@@ -199,6 +199,11 @@ def consult_ai(question: str, country: str = "UA", language: str = "uk") -> dict
 def index():
     return render_template("index.html")
 
+@app.route("/sources")
+def sources_page():
+    sources_list = sorted(SOURCES.values(), key=lambda source: (source.get("country", ""), source.get("title", "")))
+    return render_template("sources.html", sources=sources_list)
+
 @app.route("/api/consult", methods=["POST"])
 def api_consult():
     data = request.get_json()
