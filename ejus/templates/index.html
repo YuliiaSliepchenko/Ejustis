@@ -11,7 +11,7 @@
 <body>
 
 <!-- Quick Exit -->
-<button class="quick-exit" onclick="quickExit()" title="Швидкий вихід">✕ Вихід</button>
+<button class="quick-exit" onclick="quickExit()" title="Швидкий вихід" data-i18n-title="quickExitTitle"><span data-i18n="quickExit">✕ Вихід</span></button>
 
 <!-- Header -->
 <header class="header">
@@ -20,13 +20,13 @@
       <span class="logo-icon">⚖</span>
       <div class="logo-text">
         <span class="logo-name">eJustice</span>
-        <span class="logo-sub">Права людини • Офіційні джерела</span>
+        <span class="logo-sub" data-i18n="logoSub">Права людини • Офіційні джерела</span>
       </div>
     </div>
     <nav class="nav">
-      <a href="#consult" class="nav-link">Консультація</a>
-      <a href="#sources" class="nav-link">Джерела</a>
-      <a href="#topics" class="nav-link">Теми</a>
+      <a href="#consult" class="nav-link" data-i18n="navConsult">Консультація</a>
+      <a href="#sources" class="nav-link" data-i18n="navSources">Джерела</a>
+      <a href="#topics" class="nav-link" data-i18n="navTopics">Теми</a>
     </nav>
   </div>
 </header>
@@ -34,51 +34,52 @@
 <!-- Hero -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-badge">🔒 Тільки офіційні джерела</div>
+    <div class="hero-badge" data-i18n="heroBadge">🔒 Тільки офіційні джерела</div>
     <h1 class="hero-title">
-      Ваші права<br/>
-      <em>захищені законом</em>
+      <span data-i18n="heroTitle">Ваші права</span><br/>
+      <em data-i18n="heroEm">захищені законом</em>
     </h1>
     <p class="hero-desc">
-      AI-консультації з прав людини на основі офіційного законодавства України,
-      міжнародних договорів та рішень ЄСПЛ. Жодної відповіді без джерела.
+      <span data-i18n="heroDesc">AI-консультації з прав людини на основі офіційного законодавства України,
+      міжнародних договорів та рішень ЄСПЛ. Жодної відповіді без джерела.</span>
     </p>
 
     <!-- Consult Form -->
     <div class="consult-form" id="consult">
       <div class="form-row">
         <select class="country-select" id="countrySelect">
-          <option value="UA">🇺🇦 Україна</option>
-          <option value="EU">🇪🇺 Країна ЄС</option>
-          <option value="OTHER">🌍 Інша країна</option>
+          <option value="UA" data-i18n="countryUA">🇺🇦 Україна</option>
+          <option value="EU" data-i18n="countryEU">🇪🇺 Країна ЄС</option>
+          <option value="OTHER" data-i18n="countryOther">🌍 Інша країна</option>
         </select>
       </div>
       <div class="form-row form-row-split">
-        <label class="field-label" for="languageSelect">Мова відповіді</label>
+        <label class="field-label" for="languageSelect" data-i18n="languageLabel">Мова відповіді</label>
         <select class="country-select" id="languageSelect">
-          <option value="uk">Українська</option>
+          <option value="uk" data-i18n="languageUk">Українська</option>
           <option value="en">English</option>
         </select>
       </div>
       <div class="assistant-intro">
         <p>
-          Як ШІ-асистент з первинної юридичної допомоги, я можу зробити первинний правовий аналіз ситуації,
+          <span data-i18n="assistantIntro">Як ШІ-асистент з первинної юридичної допомоги, я можу зробити первинний правовий аналіз ситуації,
           визначити перелік прав, які може мати особа, знайти у юридичних документах світу та обраної країни
-          відповідні норми, а також запропонувати комплекс заходів, які можна вжити для вирішення ситуації.
+          відповідні норми, а також запропонувати комплекс заходів, які можна вжити для вирішення ситуації.</span>
         </p>
-        <strong>Для початку, опишіть ситуацію.</strong>
+        <strong data-i18n="assistantStart">Для початку, опишіть ситуацію.</strong>
       </div>
       <textarea
         id="questionInput"
         class="question-input"
         placeholder="Наприклад: «Мене незаконно затримали. Що робити?»"
+        data-i18n-placeholder="questionPlaceholder"
         rows="4"
         maxlength="2000"
       ></textarea>
       <div class="form-footer">
         <span class="char-count" id="charCount">0 / 2000</span>
         <button class="btn-consult" id="consultBtn" onclick="submitConsult()">
-          <span class="btn-text">Отримати консультацію</span>
+          <span class="btn-text" data-i18n="consultButton">Отримати консультацію</span>
           <span class="btn-icon">→</span>
         </button>
       </div>
@@ -86,12 +87,12 @@
 
     <!-- Topics chips -->
     <div class="topics-chips" id="topicsChips">
-      <span class="chip-label">Популярні теми:</span>
-      <button class="chip" onclick="setQuestion('Мене незаконно затримали. Що робити?')">Затримання</button>
-      <button class="chip" onclick="setQuestion('Як подати скаргу до ЄСПЛ?')">ЄСПЛ</button>
-      <button class="chip" onclick="setQuestion('Мої права під час обшуку')">Обшук</button>
-      <button class="chip" onclick="setQuestion('Дискримінація на роботі — порушення прав людини?')">Дискримінація</button>
-      <button class="chip" onclick="setQuestion('Права військовополонених за міжнародним правом')">Полон / МГП</button>
+      <span class="chip-label" data-i18n="popularTopics">Популярні теми:</span>
+      <button class="chip" onclick="setQuestionFromChip(this)" data-i18n="chipDetention" data-question-uk="Мене незаконно затримали. Що робити?" data-question-en="I was unlawfully detained. What should I do?">Затримання</button>
+      <button class="chip" onclick="setQuestionFromChip(this)" data-i18n="chipEchr" data-question-uk="Як подати скаргу до ЄСПЛ?" data-question-en="How do I file an application with the ECtHR?">ЄСПЛ</button>
+      <button class="chip" onclick="setQuestionFromChip(this)" data-i18n="chipSearch" data-question-uk="Мої права під час обшуку" data-question-en="My rights during a search">Обшук</button>
+      <button class="chip" onclick="setQuestionFromChip(this)" data-i18n="chipDiscrimination" data-question-uk="Дискримінація на роботі — порушення прав людини?" data-question-en="Discrimination at work: is it a human rights violation?">Дискримінація</button>
+      <button class="chip" onclick="setQuestionFromChip(this)" data-i18n="chipCaptivity" data-question-uk="Права військовополонених за міжнародним правом" data-question-en="Rights of prisoners of war under international law">Полон / МГП</button>
     </div>
   </div>
 </section>
@@ -102,21 +103,21 @@
     <div class="result-header">
       <div class="result-title-row">
         <span class="result-icon">📋</span>
-        <h2 class="result-title">Відповідь eJustice</h2>
+        <h2 class="result-title" data-i18n="resultTitle">Відповідь eJustice</h2>
         <span class="result-time" id="resultTime"></span>
       </div>
       <div class="source-badge">
         <span class="source-dot"></span>
-        Відповідь сформована на основі офіційних джерел
+        <span data-i18n="sourceBadgeOk">Відповідь сформована на основі офіційних джерел</span>
       </div>
     </div>
 
     <div class="result-body" id="resultBody"></div>
 
     <div class="result-actions">
-      <button class="btn-secondary" onclick="printResult()">🖨 Роздрукувати</button>
-      <button class="btn-secondary" onclick="copyResult()">📋 Копіювати</button>
-      <button class="btn-secondary" onclick="newQuestion()">+ Нове питання</button>
+      <button class="btn-secondary" onclick="printResult()" data-i18n="printButton">🖨 Роздрукувати</button>
+      <button class="btn-secondary" onclick="copyResult()" data-i18n="copyButton">📋 Копіювати</button>
+      <button class="btn-secondary" onclick="newQuestion()" data-i18n="newQuestionButton">+ Нове питання</button>
     </div>
   </div>
 </section>
@@ -125,8 +126,8 @@
 <div class="loading-overlay" id="loadingOverlay" style="display:none">
   <div class="loading-box">
     <div class="loading-spinner"></div>
-    <p class="loading-text">Шукаємо в офіційних джерелах...</p>
-    <p class="loading-sub">Перевіряємо законодавство та міжнародні договори</p>
+    <p class="loading-text" data-i18n="loadingText">Шукаємо в офіційних джерелах...</p>
+    <p class="loading-sub" data-i18n="loadingSub">Перевіряємо законодавство та міжнародні договори</p>
   </div>
 </div>
 
@@ -138,10 +139,10 @@
 </div>
 
 <!-- Sources Section -->
-<section class="sources-section" id="sources">
+<section class="sources-section" id="sources" style="display:none">
   <div class="section-inner">
-    <h2 class="section-title">Джерела, які використовуються</h2>
-    <p class="section-sub">Повний список офіційних правових джерел, які eJustice може враховувати під час первинного аналізу ситуації.</p>
+    <h2 class="section-title" data-i18n="sourcesTitle">Джерела, які використовуються</h2>
+    <p class="section-sub" data-i18n="sourcesSub">Повний список офіційних правових джерел, які eJustice може враховувати під час первинного аналізу ситуації.</p>
     <div class="sources-list" id="sourcesGrid">
       <!-- filled by JS -->
     </div>
@@ -153,11 +154,11 @@
   <div class="disclaimer-inner">
     <span class="disclaimer-icon">ℹ</span>
     <p>
-      <strong>eJustice</strong> — AI-система первинної правової інформації.
+      <span data-i18n="disclaimerText"><strong>eJustice</strong> — AI-система первинної правової інформації.
       Відповіді формуються виключно на базі офіційних джерел.
       Ця платформа <strong>не замінює</strong> консультацію адвоката.
       У разі серйозної правової ситуації зверніться до юриста або до
-      <a href="https://ombudsman.gov.ua" target="_blank">Уповноваженого з прав людини</a>.
+      <a href="https://ombudsman.gov.ua" target="_blank">Уповноваженого з прав людини</a>.</span>
     </p>
   </div>
 </section>
@@ -165,8 +166,8 @@
 <footer class="footer">
   <div class="footer-inner">
     <span>© 2026 eJustice</span>
-    <span>Права людини • Офіційні джерела</span>
-    <button class="quick-exit-footer" onclick="quickExit()">Швидкий вихід ✕</button>
+    <span data-i18n="logoSub">Права людини • Офіційні джерела</span>
+    <button class="quick-exit-footer" onclick="quickExit()" data-i18n="quickExitFooter">Швидкий вихід ✕</button>
   </div>
 </footer>
 
