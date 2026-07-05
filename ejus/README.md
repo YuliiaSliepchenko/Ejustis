@@ -27,7 +27,7 @@ ejustice/
 ### 1. Встановлення залежностей
 
 ```bash
-cd ejustice
+cd ejus
 pip install -r requirements.txt
 ```
 
